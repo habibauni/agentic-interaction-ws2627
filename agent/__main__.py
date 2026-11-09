@@ -112,7 +112,6 @@ tools = [
                         "description": "Date in YYYY-MM-DD format."
                     }
                 },
-                "required": ["date"],
                 "additionalProperties": False
             }
         }
@@ -161,7 +160,6 @@ def main():
                 {"role": "user", "content": user_task}
             ],
             tools=tools,
-            tool_choice="required"
         )
 
         model_duration = (
