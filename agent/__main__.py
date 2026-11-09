@@ -1,4 +1,3 @@
-
 import os
 import sys
 import json
@@ -11,10 +10,7 @@ import requests
 from dotenv import load_dotenv
 from openai import OpenAI
 
-
-# --------------------------------------------------
-# 1. Load configuration
-# --------------------------------------------------
+# Load configuration
 
 load_dotenv(override=False)
 
@@ -31,17 +27,11 @@ client = OpenAI(
     base_url=base_url
 )
 
-
-# --------------------------------------------------
-# 2. Create a logging function
-# --------------------------------------------------
+# Create a logging function
 
 run_id = str(uuid.uuid4())
-
 Path("logs").mkdir(exist_ok=True)
-
 log_file = Path("logs") / f"run_{run_id}.jsonl"
-
 
 def write_log(event, tool=None, args=None, ok=None, duration_ms=None):
 
@@ -59,10 +49,7 @@ def write_log(event, tool=None, args=None, ok=None, duration_ms=None):
     with open(log_file, "a", encoding="utf-8") as file:
         file.write(json.dumps(entry, ensure_ascii=False) + "\n")
 
-
-# --------------------------------------------------
-# 3. Create the calendar tool
-# --------------------------------------------------
+# Create the calendar tool
 
 def get_calendar(date_string):
 
@@ -105,10 +92,7 @@ def get_calendar(date_string):
             "error": "The calendar endpoint returned invalid JSON."
         }
 
-
-# --------------------------------------------------
-# 4. Define the tool for the AI model
-# --------------------------------------------------
+# Define the tool for the AI model
 
 tools = [
     {
@@ -135,10 +119,8 @@ tools = [
     }
 ]
 
+# Run the AI agent
 
-# --------------------------------------------------
-# 5. Run the AI agent
-# --------------------------------------------------
 
 def main():
 
@@ -262,7 +244,6 @@ def main():
         )
 
         print(answer)
-
         return 0
 
     except Exception as error:
@@ -274,7 +255,6 @@ def main():
         )
 
         print(f"Error: {error}", file=sys.stderr)
-
         return 1
 
 
